@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>예약 목록</title>
+    <style>
+        body {
+
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1 {
+            text-align: center;
+        }
+        .search-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>예약 목록</h1>
+    
+    <div class="search-form">
+        <form method="get" action="/list">
+            <input type="text" name="search" placeholder="예약자 이름 검색" value="{{ search }}">
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+<form method="POST" action="/delete" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+    <button type="submit">선택 삭제</button>
+    <table>
+        <thead>
+            <tr>
+                <th>선택</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>픽업 시간</th>
+                <th>음료</th>
+                <th>요청 사항</th>
+            </tr>
+         </thead>
+            {% for item in reservations %}
+        <tbody>
+            <tr>
+                <td><input type="checkbox" name="delete_ids" value="{{ item.id }}"></td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.phone }}</td>
+                <td>{{ item.time }}</td>
+                <td>{{ item.drink }}</td>
+                <td>{{ item.inquiry }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+
+    <a class="back-link" href="/">예약 폼으로 돌아가기기</a>
+
+</body>
+</html>

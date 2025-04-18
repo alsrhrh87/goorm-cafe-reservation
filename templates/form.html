@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>카페 예약</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 공통 구름 스타일 */
+        .cloud {
+            position: fixed;
+            width: 80px;
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        /* 개별 구름 위치 조정 */
+        .cloud1 { top: 60px; left: 50px; }
+        .cloud2 { top: 100px; right: 200px; }
+        .cloud3 { top: 450px; left: 150px; }
+        .cloud4 { top: 200px; left: 400px; }
+        .cloud5 { top: 300px; right: 400px; }
+        .cloud6 { top: 700px; left: 350px; }
+        .cloud7 { top: 800px; right: 400px; }
+        .cloud8 { top: 600px; right: 100px; }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 { margin-bottom: 30px; }
+
+        .message {
+            color: green;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            margin: 30px 70px 0;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .radio-group {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .radio-group label {
+            font-weight: normal;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        textarea::placeholder {
+            font-size: 16px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 구름 이미지 3개 각각 위치 조정 -->
+    <img src="{{ cloud_url }}" alt="Cloud" class="cloud cloud1">
+    <img src="{{ cloud_url }}" alt="Cloud" class="cloud cloud2">
+    <img src="{{ cloud_url }}" alt="Cloud" class="cloud cloud3">
+    <img src="{{ cloud_url }}" alt="Cloud" class="cloud cloud4">
+    <img src="{{ cloud_url }}" alt="Cloud" class="cloud cloud5">
+    <img src="{{ cloud_url }}" alt="Cloud" class="cloud cloud6">
+    <img src="{{ cloud_url }}" alt="Cloud" class="cloud cloud7">
+    <img src="{{ cloud_url }}" alt="Cloud" class="cloud cloud8">
+
+    <div class="container">
+        <h1>☁️구름 카페 예약☁️</h1>
+
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+
+        <form method="post" action="/reserve">
+            <label>이름 <input type="text" name="name" required></label><br>
+            <label>전화번호( - 제외 ) <input type="text" name="phone" required></label><br>
+            <label>픽업 시간
+                <select name="time" required>
+                    <option value="">-- 픽업 시간을 선택하세요 --</option>
+                    <option value="5분 후에">5분 후에</option>
+                    <option value="10분 후에">10분 후에</option>
+                    <option value="15분 후에">15분 후에</option>
+                    <option value="30분 후에">30분 후에</option>
+                </select>
+            </label><br><br>
+
+            <label>선호 음료
+                <select name="drink" required>
+                    <option value="">-- 음료를 선택하세요 --</option>
+                    <option value="아메리카노">아메리카노</option>
+                    <option value="카페라떼">카페라떼</option>
+                    <option value="카푸치노">카푸치노</option>
+                    <option value="바닐라라떼">바닐라라떼</option>
+                    <option value="돌체라떼">돌체라떼</option>
+                </select>
+            </label><br><br>
+
+            <label>사이즈
+                <select name="size" required>
+                    <option value="Medium">M</option>
+                    <option value="Large">L</option>
+                    <option value="Extra Large">XL</option>
+                </select>
+            </label><br>
+
+            <div class="radio-group">
+                <label><input type="radio" name="temperature" value="Ice" required> 아이스</label>
+                <label><input type="radio" name="temperature" value="Hot" required> 핫</label>
+            </div><br>
+
+            <label for="inquiry">요청사항:</label>
+            <textarea name="inquiry" id="inquiry" rows="4" cols="50" placeholder="예: 설탕시럽 두 펌프 넣어주세요."></textarea>
+            <button type="submit">예약하기</button>
+        </form>
+    </div>
+</body>
+</html>
